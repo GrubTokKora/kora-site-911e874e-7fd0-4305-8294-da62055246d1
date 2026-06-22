@@ -1,14 +1,11 @@
 @import "tailwindcss";
+@import "./_kora_theme.css";
 
 /* Scan the static HTML + JS so utilities are generated into assets/styles.css */
 @source "../**/*.html";
 @source "../js/**/*.js";
+@import "./site-custom.css";
 
-/* ============================================================
-   Nawabi Hyderabad House — Tailwind theme
-   Brand-locked to the logo: saffron sunset, forest-green banner,
-   spice-red script, warm cream field. Type: Yeseva One / Mukta / Pacifico.
-   ============================================================ */
 /* KORA_BRAND_THEME_START */
 @theme {
   --color-primary: #006a1e;
@@ -25,5 +22,3 @@
   h1, h2, h3, h4, h5, h6 { font-family: var(--font-heading); }
 }
 /* KORA_BRAND_BASE_END */
-
-

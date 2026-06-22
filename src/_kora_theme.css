@@ -1,0 +1,72 @@
+/* Nawabi Hyderabad House site-specific Tailwind theme.
+   Keep this outside the KORA_BRAND_THEME markers so deploy-time brand sync
+   can update its small managed block without deleting these utilities. */
+@theme {
+  /* ---- Saffron (primary — the sunset gradient) ---- */
+  --color-saffron-50:  #FFF4E2;
+  --color-saffron-100: #FEE6C2;
+  --color-saffron-200: #FBCB85;
+  --color-saffron-300: #F9B021;
+  --color-saffron-400: #F0930E;
+  --color-saffron-500: #E87A00;
+  --color-saffron-600: #C76300;
+  --color-saffron-700: #9E4D04;
+  --color-saffron-800: #7A3D0A;
+  --color-saffron-900: #5A2E0B;
+
+  /* ---- Forest green (the banner + palms) ---- */
+  --color-green-50:  #E8F3EB;
+  --color-green-100: #C6E2CD;
+  --color-green-200: #8DC59E;
+  --color-green-300: #4FA56C;
+  --color-green-400: #1E8443;
+  --color-green-500: #006A1E;
+  --color-green-600: #005A19;
+  --color-green-700: #044A16;
+  --color-green-800: #093A14;
+  --color-green-900: #0A2B11;
+
+  /* ---- Spice red (the "Biryani Place" script) ---- */
+  --color-spice-50:  #FDECEC;
+  --color-spice-100: #FACBCC;
+  --color-spice-200: #F49799;
+  --color-spice-300: #ED3237;
+  --color-spice-400: #D21F24;
+  --color-spice-500: #B01418;
+  --color-spice-600: #8C0F12;
+
+  /* ---- Cream / saffron field ---- */
+  --color-cream-50:  #FFFDF4;
+  --color-cream-100: #FFFBD6;
+  --color-cream-200: #FBF1BD;
+  --color-cream-300: #F2E4A8;
+  --color-cream-400: #E7D285;
+
+  /* ---- Warm neutrals (clay/brown — text, borders) ---- */
+  --color-clay-50:  #FAF6EF;
+  --color-clay-100: #EFE6D6;
+  --color-clay-200: #DBC9AE;
+  --color-clay-300: #BFA37C;
+  --color-clay-400: #9A7B50;
+  --color-clay-500: #6E5436;
+  --color-clay-600: #4E3A24;
+  --color-clay-700: #3A2A19;
+  --color-clay-800: #2A1D10;
+  --color-clay-900: #1C1209;
+
+  /* ---- Semantic shortcuts ---- */
+  --color-primary: #E87A00;
+  --color-secondary: #006A1E;
+  --color-accent: #ED3237;
+  --color-ink: #2A1D10;
+  --color-page: #FFFDF4;
+
+  /* ---- Type ---- */
+  --font-sans: "Mukta", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: "Yeseva One", Georgia, "Times New Roman", serif;
+  --font-script: "Pacifico", "Brush Script MT", cursive;
+
+  /* ---- Shadows tuned warm ---- */
+  --shadow-card: 0 1px 2px rgba(42,29,16,.06), 0 8px 24px rgba(42,29,16,.08);
+  --shadow-glow: 0 8px 28px rgba(232,122,0,.35);
+}
