@@ -1,0 +1,21 @@
+@import "tailwindcss";
+@source "../**/*.html";
+@source "../assets/**/*.js";
+
+/* KORA_BRAND_THEME_START */
+@theme {
+  --color-primary: #006a1e;
+  --color-secondary: #fffdf4;
+  --color-accent: #e87a00;
+  --font-heading: "Yeseva One", serif;
+  --font-body: Mukta, sans-serif;
+}
+/* KORA_BRAND_THEME_END */
+
+/* KORA_BRAND_BASE_START */
+@layer base {
+  body { font-family: var(--font-body); }
+  h1, h2, h3, h4, h5, h6 { font-family: var(--font-heading); }
+}
+/* KORA_BRAND_BASE_END */
+
