@@ -63,9 +63,9 @@
   --color-page: #FFFDF4;
 
   /* ---- Type ---- */
-  --font-sans: "Mukta", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --font-display: "Yeseva One", Georgia, "Times New Roman", serif;
-  --font-script: "Pacifico", "Brush Script MT", cursive;
+  --font-sans: var(--font-body);
+  --font-display: var(--font-heading);
+  --font-script: var(--font-accent);
 
   /* ---- Shadows tuned warm ---- */
   --shadow-card: 0 1px 2px rgba(42,29,16,.06), 0 8px 24px rgba(42,29,16,.08);
@@ -100,8 +100,9 @@
   --color-primary: #006a1e;
   --color-secondary: #fffdf4;
   --color-accent: #e87a00;
-  --font-heading: "Yeseva One", serif;
-  --font-body: Mukta, sans-serif;
+  --font-heading: var(--kora-font-heading, "Yeseva One"), serif;
+  --font-body: var(--kora-font-body, Mukta), sans-serif;
+  --font-accent: var(--kora-font-accent, "Pacifico"), "Brush Script MT", cursive;
 }
 /* KORA_BRAND_THEME_END */
 
