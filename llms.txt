@@ -1,0 +1,35 @@
+# Nawabi Hyderabad House
+
+> Nawabi Hyderabad House, located at 4448 E New York St in Aurora, IL, specializes in authentic Hyderabadi Biryani. The restaurant offers a variety of chicken, mutton, and vegetable biryanis, as well as traditional Indian curries and appetizers.
+
+## Menu
+Specializes in authentic Hyderabadi Biryani, offering a variety of chicken, mutton, and vegetable biryanis, alongside other traditional Indian curries and appetizers.
+
+## Location & Contact
+- Address: 4448 E New York St, Aurora, IL 60504, USA
+- Phone: +16302360600
+- Email: HHNaperville@gmail.com
+- Website: https://hhnaperville.com
+
+## Hours
+- Monday: 11:30 AM - 3:00 PM, 5:30 PM - 10:00 PM
+- Tuesday: 11:30 AM - 3:00 PM, 5:30 PM - 10:00 PM
+- Wednesday: 11:30 AM - 3:00 PM, 5:30 PM - 10:00 PM
+- Thursday: 11:30 AM - 3:00 PM, 5:30 PM - 10:00 PM
+- Friday: 11:30 AM - 3:00 PM, 5:30 PM - 10:30 PM
+- Saturday: 11:30 AM - 10:30 PM
+- Sunday: 11:30 AM - 9:30 PM
+
+## Pages
+- [Taste the Best Biryani in Town](https://hhnaperville.com/)
+- [About Us](https://hhnaperville.com/about)
+- [Catering](https://hhnaperville.com/catering)
+- [Contact Us](https://hhnaperville.com/contact)
+- [Menu](https://hhnaperville.com/menu)
+
+## Action Links
+- [Order Online](https://order.toasttab.com/online/hhnaperville)
+- [View Menu](menu.html)
+
+## Social
+- [Facebook](https://www.facebook.com/hhnaperville/)
