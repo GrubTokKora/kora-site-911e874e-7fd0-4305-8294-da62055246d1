@@ -152,6 +152,7 @@
   /* ---- Smooth in-page anchors (offset for sticky header) ---- */
   document.querySelectorAll('a[href^="#"]').forEach(function (link) {
     link.addEventListener("click", function (e) {
+      if (link.closest(".kora-menu")) return; /* Kora's own script handles the menu's tab links */
       var hash = link.getAttribute("href");
       if (!hash || hash === "#") return;
       var target = document.getElementById(hash.slice(1));
@@ -180,41 +181,81 @@
     reveals.forEach(function (el) { el.classList.add("is-visible"); });
   }
 
-  /* ---- Menu category tabs ---- */
-  var menuRoot = document.querySelector("[data-menu-root]");
-  if (menuRoot) {
-    var tabs = menuRoot.querySelectorAll("[data-menu-tab]");
-    var panels = menuRoot.querySelectorAll("[data-menu-panel]");
-    function activate(id) {
-      tabs.forEach(function (t) {
-        var on = t.getAttribute("data-menu-tab") === id;
-        t.classList.toggle("bg-green-500", on);
-        t.classList.toggle("text-white", on);
-        t.classList.toggle("border-green-500", on);
-        t.classList.toggle("bg-white", !on);
-        t.classList.toggle("text-clay-700", !on);
-        t.classList.toggle("border-clay-200", !on);
-        t.setAttribute("aria-selected", String(on));
-      });
-      panels.forEach(function (p) {
-        p.classList.toggle("is-active", p.getAttribute("data-menu-panel") === id);
-      });
+  /* ---- Menu tabs ----
+     Kora draws the menus from the site's menu data into the kora:data:menu region on menu.html, and its own
+     script shows one menu at a time. Here the tabs get their short labels, a sub-section's price list sits after
+     its heading and a note such as "Weekends" beside its dish name, as before; the B / R price key is bold,
+     and the old #biryanis-style links still open their tab. */
+  var koraMenu = document.querySelector("[data-menu-root] .kora-menu");
+  if (koraMenu) {
+    var tabLabels = {
+      "Hyderabadi Dum Biryanis": "Biryanis",
+      "Tandoori Specialties": "Tandoori",
+      "Indo-Chinese Specialties": "Indo-Chinese",
+      "South Indian Dosa & Tiffins": "Dosa & Tiffins",
+      "Breads & Paratha": "Breads",
+      "Kids Menu & Desi Fusion": "Kids & Fusion",
+      "Desserts & Beverages": "Desserts & Drinks"
+    };
+    var oldTabs = {
+      biryanis: "Hyderabadi Dum Biryanis", pulavrice: "Pulav & Rice", tandoori: "Tandoori Specialties",
+      appetizers: "Appetizers", indochinese: "Indo-Chinese Specialties", curries: "Curries & Entrees",
+      tiffins: "South Indian Dosa & Tiffins", breads: "Breads & Paratha", soups: "Soups",
+      kids: "Kids Menu & Desi Fusion", desserts: "Desserts & Beverages"
+    };
+    var menusByName = {};
+    koraMenu.querySelectorAll(".kora-menu__menu").forEach(function (m) {
+      var t = m.querySelector(".kora-menu__menu-title");
+      if (t) menusByName[t.textContent.trim()] = m;
+      var d = m.querySelector(".kora-menu__menu-desc");
+      if (d) d.innerHTML = d.innerHTML.replace(/(^|\s)([A-Z]) = /g, "$1<strong>$2</strong> = ");
+    });
+    var switcher = koraMenu.querySelector(".kora-menu__switcher");
+    var tabLinks = koraMenu.querySelectorAll(".kora-menu__switcher a");
+    if (switcher) {
+      switcher.setAttribute("role", "tablist");
+      switcher.setAttribute("aria-label", "Menu categories");
     }
-    tabs.forEach(function (t) {
-      t.addEventListener("click", function () { activate(t.getAttribute("data-menu-tab")); });
+    tabLinks.forEach(function (a) {
+      var name = a.textContent.trim();
+      if (tabLabels[name]) a.textContent = tabLabels[name];
+      a.setAttribute("role", "tab");
+      a.addEventListener("click", syncTabs);
+    });
+    function syncTabs() {
+      tabLinks.forEach(function (a) { a.setAttribute("aria-selected", String(a.getAttribute("aria-current") === "true")); });
+    }
+    koraMenu.querySelectorAll(".kora-menu__section-desc").forEach(function (desc) {
+      var title = desc.parentNode.querySelector(".kora-menu__section-title");
+      if (!title) return;
+      var inline = document.createElement("span");
+      inline.className = "kora-menu__section-desc-inline";
+      inline.textContent = "(" + desc.textContent.trim() + ")";
+      title.appendChild(document.createTextNode(" "));
+      title.appendChild(inline);
+      desc.remove();
+    });
+    koraMenu.querySelectorAll(".kora-menu__item-note").forEach(function (note) {
+      var name = note.closest(".kora-menu__item").querySelector(".kora-menu__item-name");
+      if (!name) return;
+      var pill = document.createElement("span");
+      pill.className = "kora-menu__item-badge";
+      pill.textContent = note.textContent;
+      name.appendChild(document.createTextNode(" "));
+      name.appendChild(pill);
+      note.remove();
     });
     var hash = (location.hash || "").slice(1);
-    var fromHash = hash && menuRoot.querySelector('[data-menu-tab="' + hash + '"]');
-    var first = tabs[0];
-    var initial = fromHash ? hash : (first ? first.getAttribute("data-menu-tab") : null);
-    if (initial) {
-      activate(initial);
-      if (fromHash) {
-        var h = header ? header.getBoundingClientRect().height : 0;
-        var top = window.pageYOffset + menuRoot.getBoundingClientRect().top - h - 12;
-        window.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
-      }
+    var target = (oldTabs[hash] && menusByName[oldTabs[hash]]) || (hash && koraMenu.querySelector("#" + CSS.escape(hash)));
+    if (target) {
+      var menu = target.closest(".kora-menu__menu");
+      var tab = menu && koraMenu.querySelector('.kora-menu__switcher a[href="#' + menu.id + '"]');
+      if (tab && oldTabs[hash]) tab.click();
+      var h = header ? header.getBoundingClientRect().height : 0;
+      var top = window.pageYOffset + koraMenu.closest("[data-menu-root]").getBoundingClientRect().top - h - 12;
+      window.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
     }
+    syncTabs();
   }
 
   /* ---- FAQ accordion ---- */

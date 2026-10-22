@@ -70,7 +70,6 @@ Files that are not pages. A line marked [content] holds words or data a visitor 
 change to the site's content can land there; the rest only make the site work or look right.
 - `robots.txt` — 69 bytes — too small to hold content
 - `sitemap.xml` — the list of site URLs for search engine indexing
-- `style.css` — Component styling and animations for the site
 - `js/main.js` — Shared header, shared footer, site navigation links, logo URL, business contact info, address, and hours of operation: Home, Menu, About Us, Catering, Contact, Mon–Thu: 11:30am–3pm, 5:30–10pm, Fri: 11:30am–3pm, 5:30–10:30pm, Sat: 11:30am–10:30pm, Sun: 11:30am–9:30pm  [content]
 
 ## shared (every page)

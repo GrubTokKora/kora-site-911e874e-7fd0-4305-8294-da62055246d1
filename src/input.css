@@ -1,10 +1,99 @@
 @import "tailwindcss";
-@import "./_kora_theme.css";
+/* Nawabi Hyderabad House site-specific Tailwind theme (formerly src/_kora_theme.css).
+   Keep this outside the KORA_BRAND_THEME markers so deploy-time brand sync
+   can update its small managed block without deleting these utilities. */
+@theme {
+  /* ---- Saffron (primary — the sunset gradient) ---- */
+  --color-saffron-50:  #FFF4E2;
+  --color-saffron-100: #FEE6C2;
+  --color-saffron-200: #FBCB85;
+  --color-saffron-300: #F9B021;
+  --color-saffron-400: #F0930E;
+  --color-saffron-500: #E87A00;
+  --color-saffron-600: #C76300;
+  --color-saffron-700: #9E4D04;
+  --color-saffron-800: #7A3D0A;
+  --color-saffron-900: #5A2E0B;
+
+  /* ---- Forest green (the banner + palms) ---- */
+  --color-green-50:  #E8F3EB;
+  --color-green-100: #C6E2CD;
+  --color-green-200: #8DC59E;
+  --color-green-300: #4FA56C;
+  --color-green-400: #1E8443;
+  --color-green-500: #006A1E;
+  --color-green-600: #005A19;
+  --color-green-700: #044A16;
+  --color-green-800: #093A14;
+  --color-green-900: #0A2B11;
+
+  /* ---- Spice red (the "Biryani Place" script) ---- */
+  --color-spice-50:  #FDECEC;
+  --color-spice-100: #FACBCC;
+  --color-spice-200: #F49799;
+  --color-spice-300: #ED3237;
+  --color-spice-400: #D21F24;
+  --color-spice-500: #B01418;
+  --color-spice-600: #8C0F12;
+
+  /* ---- Cream / saffron field ---- */
+  --color-cream-50:  #FFFDF4;
+  --color-cream-100: #FFFBD6;
+  --color-cream-200: #FBF1BD;
+  --color-cream-300: #F2E4A8;
+  --color-cream-400: #E7D285;
+
+  /* ---- Warm neutrals (clay/brown — text, borders) ---- */
+  --color-clay-50:  #FAF6EF;
+  --color-clay-100: #EFE6D6;
+  --color-clay-200: #DBC9AE;
+  --color-clay-300: #BFA37C;
+  --color-clay-400: #9A7B50;
+  --color-clay-500: #6E5436;
+  --color-clay-600: #4E3A24;
+  --color-clay-700: #3A2A19;
+  --color-clay-800: #2A1D10;
+  --color-clay-900: #1C1209;
+
+  /* ---- Semantic shortcuts ---- */
+  --color-primary: #E87A00;
+  --color-secondary: #006A1E;
+  --color-accent: #ED3237;
+  --color-ink: #2A1D10;
+  --color-page: #FFFDF4;
+
+  /* ---- Type ---- */
+  --font-sans: "Mukta", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: "Yeseva One", Georgia, "Times New Roman", serif;
+  --font-script: "Pacifico", "Brush Script MT", cursive;
+
+  /* ---- Shadows tuned warm ---- */
+  --shadow-card: 0 1px 2px rgba(42,29,16,.06), 0 8px 24px rgba(42,29,16,.08);
+  --shadow-glow: 0 8px 28px rgba(232,122,0,.35);
+}
 
 /* Scan the static HTML + JS so utilities are generated into assets/styles.css */
 @source "../**/*.html";
 @source "../js/**/*.js";
-@import "./site-custom.css";
+/* Site base rules from the premium Nawabi build (formerly src/site-custom.css). */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 6rem;
+  }
+  body {
+    font-family: var(--font-sans);
+    color: var(--color-clay-700);
+    background: var(--color-cream-50);
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    color: var(--color-clay-800);
+    font-weight: 400;
+    letter-spacing: -0.01em;
+  }
+}
 
 /* KORA_BRAND_THEME_START */
 @theme {
@@ -22,3 +111,380 @@
   h1, h2, h3, h4, h5, h6 { font-family: var(--font-heading); }
 }
 /* KORA_BRAND_BASE_END */
+
+/* Site styles (formerly style.css): the brand "signature" devices and component styles. Kept outside
+   @layer, in their original order, so they win over Tailwind's preflight and utilities exactly as the
+   separate stylesheet did, and so the menu rules beat Kora's unlayered base menu style. */
+/* ============================================================
+   Nawabi Hyderabad House — hand-written component styles
+   Houses the brand "signature" devices lifted from the logo:
+   the sunset arch, the forest-green ribbon banner, and the
+   spice-red script underline.
+   ============================================================ */
+
+:root {
+  --header-h: 76px;
+}
+
+/* ---- Header ---------------------------------------------------------- */
+.site-header {
+  transition: background-color .35s ease, box-shadow .35s ease, backdrop-filter .35s ease;
+}
+.site-header.is-scrolled {
+  background: rgba(255, 253, 244, .92);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 20px rgba(42, 29, 16, .08);
+  border-bottom-color: rgba(219, 201, 174, .7);
+}
+.nav-link {
+  position: relative;
+  padding: 6px 0;
+}
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: -2px;
+  height: 2px;
+  background: var(--color-saffron-500, #E87A00);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .25s ease;
+}
+.nav-link:hover::after,
+.nav-link[aria-current="page"]::after { transform: scaleX(1); }
+.nav-link[aria-current="page"] { color: #005A19; }
+
+/* ---- Signature: forest-green ribbon banner (the logo's green bar) ---- */
+.kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  font-weight: 700;
+  font-size: .8rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+}
+.ribbon {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  padding: .35rem 1rem .4rem;
+  border-radius: 999px;
+  background: #006A1E;
+  color: #fff;
+  font-weight: 700;
+  font-size: .72rem;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  box-shadow: 0 4px 14px rgba(0, 106, 30, .28);
+}
+
+/* ---- Shared page hero ------------------------------------------------ */
+.page-hero {
+  position: relative;
+  min-height: clamp(260px, 36vw, 390px);
+  overflow: hidden;
+  background: url("https://quseprdus1.blob.core.windows.net/kora-business-images/user-media/911e874e-7fd0-4305-8294-da62055246d1/de8c94d8-887e-4625-825f-ec262dbc28df/1782133693_rcuri3.jpg") center / cover no-repeat;
+  display: grid;
+  place-items: center;
+  text-align: center;
+}
+.page-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+.page-hero__inner {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 80rem);
+  padding: 4rem 1.25rem;
+  color: var(--color-cream-50, #fffdf4);
+}
+.page-hero__title {
+  margin-top: 1.15rem;
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 5vw, 4.2rem);
+  line-height: 1.05;
+  color: #fff;
+  text-transform: uppercase;
+}
+.page-hero__breadcrumbs {
+  margin-top: 1.4rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .6rem;
+  color: #fff;
+  font-size: clamp(1rem, 2vw, 1.35rem);
+  font-weight: 800;
+  letter-spacing: .03em;
+  text-transform: uppercase;
+}
+.page-hero__breadcrumbs a {
+  transition: color .2s ease;
+}
+.page-hero__breadcrumbs a:hover {
+  color: var(--color-saffron-300, #F9B021);
+}
+.page-hero__separator {
+  color: var(--color-saffron-300, #F9B021);
+}
+
+/* ---- Signature: spice-red script flourish (the "Biryani Place" line) ---- */
+.script {
+  font-family: var(--font-script, "Pacifico", cursive);
+  color: #ED3237;
+  font-weight: 400;
+  line-height: 1.1;
+}
+.script-underline {
+  position: relative;
+  display: inline-block;
+}
+.script-underline::after {
+  content: "";
+  position: absolute;
+  left: 4%; right: 4%; bottom: -.45em;
+  height: .42em;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 14' preserveAspectRatio='none'%3E%3Cpath d='M2 9 C40 2 80 2 120 6 S180 11 198 4' fill='none' stroke='%23E87A00' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat center / 100% 100%;
+}
+
+/* ---- Signature: the sunset arch behind hero food ---- */
+.sunset-arch {
+  position: relative;
+  border-radius: 999px;
+  background:
+    radial-gradient(120% 90% at 50% 18%, #F9B021 0%, #E87A00 46%, #9E4D04 100%);
+  overflow: hidden;
+}
+.sunset-arch::before {
+  /* faint palm silhouettes, echoing the logo */
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(closest-side, rgba(255, 255, 255, .22), transparent 70%) 50% 20% / 70% 50% no-repeat;
+  opacity: .8;
+}
+.sunset-arch::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 6px;
+  background: linear-gradient(90deg, #E87A00, #F9B021 50%, #006A1E);
+}
+
+/* dum-seal floating chip */
+.float-chip {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 12px 30px rgba(42, 29, 16, .18);
+}
+
+/* ---- Section divider: the sunset rule ---- */
+.sunset-rule {
+  height: 6px;
+  background: linear-gradient(90deg, #E87A00, #F9B021 45%, #006A1E);
+}
+
+
+/* ---- Reveal on scroll ---- */
+.js-reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity .6s ease, transform .6s ease;
+  will-change: opacity, transform;
+}
+.js-reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* hero entrance */
+.hero-inner { opacity: 0; transform: translateY(16px); transition: opacity .7s ease, transform .7s ease; }
+.hero-inner.is-loaded { opacity: 1; transform: none; }
+.hero-art { opacity: 0; transform: scale(.94); transition: opacity .9s .15s ease, transform .9s .15s ease; }
+.hero-inner.is-loaded .hero-art { opacity: 1; transform: none; }
+
+/* ---- Floating spice / herb accents (scroll parallax + idle drift) ---- */
+.spice {
+  position: absolute;
+  pointer-events: none;
+  z-index: 1;
+  transform: translateY(var(--py, 0px));
+  will-change: transform;
+}
+.spice img {
+  display: block;
+  width: 100%;
+  height: auto;
+  opacity: .9;
+  filter: drop-shadow(0 10px 18px rgba(42, 29, 16, .18));
+  animation: spiceFloat 7s ease-in-out infinite;
+}
+.spice--slow img { animation-duration: 9s; }
+.spice--rev img { animation-direction: reverse; }
+@keyframes spiceFloat {
+  0%, 100% { transform: translateY(0) rotate(var(--rot, 0deg)); }
+  50% { transform: translateY(-14px) rotate(calc(var(--rot, 0deg) + 6deg)); }
+}
+
+/* ---- Scroll-reactive rotating dish (on a tan pillar, framed by basil) ---- */
+.dish-stage { position: relative; }
+.dish-pillar {
+  position: absolute;
+  left: 50%;
+  top: 4%;
+  bottom: 4%;
+  width: 30%;
+  transform: translateX(-50%);
+  border-radius: 999px;
+  background: linear-gradient(180deg, #CBA86C 0%, #B68E50 55%, #9A7338 100%);
+  box-shadow: inset 0 2px 10px rgba(255, 255, 255, .25);
+  z-index: 0;
+}
+.spin-dish {
+  position: relative;
+  z-index: 2;
+  will-change: transform;
+  filter: drop-shadow(0 20px 36px rgba(42, 29, 16, .28));
+}
+
+/* ---- Faint botanical line-art decorations (menu section) ---- */
+.deco {
+  position: absolute;
+  pointer-events: none;
+  z-index: 0;
+  opacity: .55;
+  transform: translateY(var(--py, 0px));
+  will-change: transform;
+}
+
+/* ---- Tasting marquee: continuous scroll through dishes ---- */
+.marquee {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+}
+.marquee__track {
+  display: flex;
+  width: max-content;
+  gap: 1.25rem;
+  animation: marquee 42s linear infinite;
+}
+.marquee:hover .marquee__track { animation-play-state: paused; }
+.marquee__item {
+  flex: 0 0 auto;
+  width: 200px;
+  text-align: center;
+}
+.marquee__item img {
+  width: 168px;
+  height: 168px;
+  object-fit: cover;
+  border-radius: 999px;
+  border: 4px solid #fff;
+  box-shadow: 0 12px 30px rgba(42, 29, 16, .16);
+  margin: 0 auto .6rem;
+  background: var(--color-cream-100, #FFFBD6);
+}
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(calc(-50% - 0.625rem)); }
+}
+
+/* ---- Scroll-to-top ---- */
+.to-top {
+  transition: opacity .3s ease, transform .3s ease;
+}
+
+/* ---- Accessible focus ---- */
+a:focus-visible, button:focus-visible {
+  outline: 3px solid #F9B021;
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+/* ---- Reduced motion ---- */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .js-reveal, .hero-inner, .hero-art { transition: none; opacity: 1; transform: none; }
+  [data-menu-root] .kora-menu .kora-menu__menu:not([hidden]) { animation: none; }
+  .spice { display: none; }
+  .spice img, .marquee__track { animation: none; }
+  .spin-dish { transform: none !important; }
+}
+
+/* ---- Menu (menu.html) ----
+   Kora draws the menus from the site's menu data into the kora:data:menu region: a tab switcher, then one
+   section per menu (Kora's script shows one at a time) holding the sub-sections and dishes. These rules give
+   it the site's pill tabs and the two-column panel the hand-written menu had; the sub-sections and dish lists
+   are taken out of the layout so every heading and dish sits in the panel's own grid, as before. */
+[data-menu-root] .kora-menu { --km-accent: #006A1E; }
+[data-menu-root] .kora-menu .kora-menu__switcher { justify-content: center; gap: 0.625rem; margin: 0 0 2.5rem; }
+[data-menu-root] .kora-menu .kora-menu__switcher a {
+  padding: 0.5rem 1.25rem;
+  border: 2px solid #DBC9AE;
+  border-radius: calc(infinity * 1px);
+  background: #fff;
+  text-align: center;
+  color: #3A2A19;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background-color .2s ease, color .2s ease, border-color .2s ease;
+}
+[data-menu-root] .kora-menu .kora-menu__switcher a[aria-current="true"] { background: #006A1E; border-color: #006A1E; color: #fff; }
+[data-menu-root] .kora-menu .kora-menu__nav { display: none; }
+[data-menu-root] .kora-menu .kora-menu__menu { display: grid; gap: 0.875rem 3rem; align-items: start; margin: 0; }
+[data-menu-root] .kora-menu .kora-menu__menu:not([hidden]) { animation: fadeUp .4s ease both; }
+@media (min-width: 48rem) {
+  [data-menu-root] .kora-menu .kora-menu__menu { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+[data-menu-root] .kora-menu .kora-menu__menu > :not(.kora-menu__section),
+[data-menu-root] .kora-menu .kora-menu__section > :not(.kora-menu__items) { grid-column: 1 / -1; }
+[data-menu-root] .kora-menu .kora-menu__section,
+[data-menu-root] .kora-menu .kora-menu__items { display: contents; }
+[data-menu-root] .kora-menu .kora-menu__menu-title { margin: 0; font-size: 1.5rem; line-height: 2rem; text-align: center; }
+[data-menu-root] .kora-menu .kora-menu__menu-desc { margin: -0.5rem 0 0.5rem; font-size: 0.875rem; line-height: 1.25rem; color: #6E5436; text-align: center; opacity: 1; }
+[data-menu-root] .kora-menu .kora-menu__section-title { margin: 0.75rem 0 0; font-family: var(--font-display); font-size: 1.125rem; line-height: 1.75rem; color: #9E4D04; }
+[data-menu-root] .kora-menu .kora-menu__section:first-of-type .kora-menu__section-title { margin-top: 0.25rem; }
+[data-menu-root] .kora-menu .kora-menu__menu-desc ~ .kora-menu__section:first-of-type .kora-menu__section-title { margin-top: 0.5rem; }
+/* A menu with one sub-section had no sub-heading. */
+[data-menu-root] .kora-menu .kora-menu__section:only-of-type .kora-menu__section-title { display: none; }
+/* Sub-heading colours, by sub-section (the end of Kora's section id is the sub-section's name). */
+[data-menu-root] .kora-menu .kora-menu__section:is([id$="-vegetarian"], [id$="-rice"], [id$="-idli-wada"], [id$="-desi-fusion-burger-pizza"], [id$="-beverages"]) .kora-menu__section-title { color: #005A19; }
+[data-menu-root] .kora-menu .kora-menu__section:is([id$="-non-veg"], [id$="-desserts"], [id$="-chef-s-weekend-specials-telugu-ruchulu"]) .kora-menu__section-title { color: #D21F24; }
+[data-menu-root] .kora-menu .kora-menu__section-desc-inline { font-family: var(--font-sans); font-size: 0.875rem; line-height: 1.25rem; color: #6E5436; }
+[data-menu-root] .kora-menu .kora-menu__item { display: block; border: 0 dashed #DBC9AE; border-bottom-width: 1px; padding-bottom: 0.75rem; }
+[data-menu-root] .kora-menu .kora-menu__item-body { display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 0.75rem; }
+[data-menu-root] .kora-menu .kora-menu__item-head { display: contents; }
+[data-menu-root] .kora-menu .kora-menu__item-name { grid-column: 1; margin: 0; font-family: var(--font-display); font-size: 17px; line-height: 1.5; letter-spacing: normal; color: #2A1D10; }
+/* 24px lines: the description used to be a small inline span inside a 24px-tall line box. */
+[data-menu-root] .kora-menu .kora-menu__item-desc { grid-column: 1; margin: 0; font-size: 0.875rem; line-height: 1.5rem; color: #6E5436; opacity: 1; }
+[data-menu-root] .kora-menu .kora-menu__item-price,
+[data-menu-root] .kora-menu .kora-menu__prices { grid-column: 2; grid-row: 1; font-weight: 700; color: #005A19; white-space: nowrap; }
+/* "B $11 / R $16", as the price was written before. */
+[data-menu-root] .kora-menu .kora-menu__prices { display: flex; gap: 0; }
+[data-menu-root] .kora-menu .kora-menu__prices li + li::before { content: " / "; white-space: pre; }
+[data-menu-root] .kora-menu .kora-menu__price-label { margin: 0; font-size: inherit; opacity: 1; }
+[data-menu-root] .kora-menu .kora-menu__price-label::after { content: " "; white-space: pre; }
+[data-menu-root] .kora-menu .kora-menu__price-value { font-weight: 700; color: inherit; }
+[data-menu-root] .kora-menu .kora-menu__item-badge {
+  margin-left: 0.25rem;
+  vertical-align: middle;
+  padding: 0.125rem 0.5rem;
+  border-radius: calc(infinity * 1px);
+  background: #FDECEC;
+  color: #D21F24;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+}
